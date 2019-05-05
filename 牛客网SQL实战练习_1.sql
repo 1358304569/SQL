@@ -1,6 +1,6 @@
 
+
 /*
-1.查找最晚入职员工的所有信息
 CREATE TABLE `employees` (
 `emp_no` int(11) NOT NULL,
 `birth_date` date NOT NULL,
@@ -11,11 +11,29 @@ CREATE TABLE `employees` (
 PRIMARY KEY (`emp_no`));
 */
 
+
+/*
+1.查找最晚入职员工的所有信息
+
+*/
+
     select *
       from employees t1
      where t1.hire_date = (select max(t2.hire_date) from employees t2)
 
 
+/*
+2. 查找入职员工时间排名倒数第三的员工所有信息
+
+*/
+
+    select t2.*
+      from employees t2
+ left join (select t1.emp_no
+                   ,rank() over(order by t1.hire_date desc) as rn 
+              from employees t1) t3
+        on t3.emp_no = t2.emp_no
+     where t3.rn = 3
 
 
 
