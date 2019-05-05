@@ -51,3 +51,39 @@ PRIMARY KEY (`emp_no`));
                          order by t1.hire_date desc
                             limit 2,1)
 
+
+
+
+/*
+3. distinct 和 group by 
+*/
+
+--distinct 
+  select distinct sa.salary
+    from salaries sa
+   where sa.to_date = "9999-01-01"
+order by sa.salary desc
+
+
+--group by 
+    select sa.salary
+      from salaries sa
+     where sa.to_date = "9999-01-01"
+  group by sa.salary
+  order by sa.salary desc
+
+--大表一般用distinct效率不高，大数据量的时候都禁止用distinct，建议用group by解决重复问题。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
