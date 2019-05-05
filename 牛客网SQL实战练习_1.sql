@@ -30,10 +30,24 @@ PRIMARY KEY (`emp_no`));
     select t2.*
       from employees t2
  left join (select t1.emp_no
-                   ,rank() over(order by t1.hire_date desc) as rn 
+                   ,dense_rank() over(order by t1.hire_date desc) as rn 
               from employees t1) t3
         on t3.emp_no = t2.emp_no
      where t3.rn = 3
 
 
+
+-- 本题中dense_rank()，rank()和row_number()都可以，引申知识：区别在哪？
+--经查询，应该用dense_rank()
+
+
+--网友的解法
+-- distinct 用于去重
+
+    select t2.*
+      from employees t2
+     where t2.hire_date = (select distinct t1.hire_date 
+                             from employees t1 
+                         order by t1.hire_date desc
+                            limit 2,1)
 
